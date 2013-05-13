@@ -1,0 +1,10 @@
+1、long long , at least 64bits,at least as large as long
+
+2、list initialization,
+	int i= {0}; int i{0};int i(0); int i = 0;
+	vector<T> v1{a, b, c};   vector<T> v2= {a, b, c};
+
+3、nullptr, the same as 0 or NULL
+
+4、constexpr�� it's a good idea to use constexpr for variables that you intend to use as constant expressions.
+	constexpr int *p = nullptr; //p is a const pointer to int
