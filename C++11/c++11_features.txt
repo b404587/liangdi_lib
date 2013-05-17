@@ -8,3 +8,14 @@
 
 4¡¢constexpr£¬ it's a good idea to use constexpr for variables that you intend to use as constant expressions.
 	constexpr int *p = nullptr; //p is a const pointer to int
+	
+5¡¢types alias£¬ typedef double wages;  using wages = double;
+
+6¡¢auto , type deducing
+
+7¡¢decltype , if p is a pointer to int , decltype(*p) is int&, not plain int
+
+8, in-class initializer
+
+..
+9¡¢vector<int> v; auto iter3 = v.cbegin(); iter3 has type vector<int>::const_iterator;
