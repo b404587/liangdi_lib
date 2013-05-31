@@ -1,4 +1,5 @@
 /wxWidgets294/lib
+/SI
 
 # Compiled Object files
 *.slo
@@ -32,3 +33,4 @@
 *.idb
 *manifest.rc
 *.ilk
+*.ipch
