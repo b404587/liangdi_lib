@@ -1,3 +1,5 @@
+/wxWidgets294/lib
+
 # Compiled Object files
 *.slo
 *.lo
@@ -15,6 +17,7 @@
 *.sdf
 *.opensdf
 *.obj
+*.log
 *.tlog
 *.pdb
 *.lastbuildstate
