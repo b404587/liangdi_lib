@@ -82,7 +82,6 @@ ACE_NLOGGING
 
 #include <ace/Log_Msg.h>
 
-<<<<<<< HEAD
 #define ACE_DEBUG_PREFIX                ACE_TEXT("\nld_Debug %D ")
 #define ACE_INFO_PREFIX                 ACE_TEXT("\nld_Info %D ")
 #define ACE_NOTICE_PREFIX               ACE_TEXT("\nld_Notice %D ")
