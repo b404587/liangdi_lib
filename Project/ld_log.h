@@ -80,6 +80,7 @@ ACE_NLOGGING
 注意，ACE_TRACE 取决于ACE_NTRACE 和ACE_NDEBUG两个配置
 */
 
+#include<fstream>
 #include <ace/Log_Msg.h>
 
 #define ACE_DEBUG_PREFIX                ACE_TEXT("\nld_Debug %D ")
@@ -120,5 +121,14 @@ ACE_NLOGGING
 
 #define LD_T(STR) ACE_TEXT(STR)
 
+
+void setLogFile(const char* file)
+{
+    ACE_OSTREAM_TYPE* output(nullptr);
+    ACE_NEW(output, std::ofstream(file, ios::app));
+    ACE_LOG_MSG->msg_ostream(output, 1);
+    ACE_LOG_MSG->set_flags(ACE_Log_Msg::OSTREAM);
+    ACE_LOG_MSG->clr_flags(ACE_Log_Msg::STDERR);
+}
 
 #endif
