@@ -4,4 +4,7 @@
 #include"ld_log.h"
 #include"ld_types.h"
 
+#include<iostream>
+using namespace std;
+
 #endif
