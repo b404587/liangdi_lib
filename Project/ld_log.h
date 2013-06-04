@@ -83,41 +83,41 @@ ACE_NLOGGING
 #include<fstream>
 #include <ace/Log_Msg.h>
 
-#define ACE_DEBUG_PREFIX                ACE_TEXT("\nld_Debug %D ")
-#define ACE_INFO_PREFIX                 ACE_TEXT("\nld_Info %D ")
-#define ACE_NOTICE_PREFIX               ACE_TEXT("\nld_Notice %D ")
-#define ACE_WARNING_PREFIX          ACE_TEXT("\nld_Warning %D ")
-#define ACE_ERROR_PREFIX                ACE_TEXT("\nld_Error %D ")
-#define ACE_CRITICAL_PREFIX             ACE_TEXT("\nld_Critical %D ")
-#define ACE_ALERT_PREFIX                ACE_TEXT("\nld_Alert %D ")
-#define ACE_EMERGENCY_PREFIX        ACE_TEXT("\nld_Emergency %D ")
+#define ACE_DEBUG_PREFIX            ACE_TEXT("%Ild_Debug %D ")
+#define ACE_INFO_PREFIX             ACE_TEXT("%Ild_Info %D ")
+#define ACE_NOTICE_PREFIX           ACE_TEXT("%Ild_Notice %D ")
+#define ACE_WARNING_PREFIX          ACE_TEXT("%Ild_Warning %D ")
+#define ACE_ERROR_PREFIX            ACE_TEXT("%Ild_Error %D ")
+#define ACE_CRITICAL_PREFIX         ACE_TEXT("%Ild_Critical %D ")
+#define ACE_ALERT_PREFIX            ACE_TEXT("%Ild_Alert %D ")
+#define ACE_EMERGENCY_PREFIX        ACE_TEXT("%Ild_Emergency %D ")
 
 #define LD_DEBUG(FMT, ...)\
-    ACE_DEBUG((LM_DEBUG, ACE_DEBUG_PREFIX  FMT __VA_ARGS__))
+    ACE_DEBUG((LM_DEBUG, ACE_DEBUG_PREFIX  FMT "\n" , __VA_ARGS__))
 
 #define LD_INFO(FMT, ...)\
-    ACE_DEBUG((LM_INFO, ACE_INFO_PREFIX FMT  __VA_ARGS__))
+    ACE_DEBUG((LM_INFO, ACE_INFO_PREFIX FMT  "\n" , __VA_ARGS__))
 
 #define LD_NOTICE(FMT, ...)\
-    ACE_DEBUG((LM_NOTICE, ACE_NOTICE_PREFIX FMT __VA_ARGS__))
+    ACE_DEBUG((LM_NOTICE, ACE_NOTICE_PREFIX FMT "\n" , __VA_ARGS__))
 
 #define LD_WARNING(FMT, ...)\
-     ACE_DEBUG((LM_WARNING, ACE_WARNING_PREFIX FMT  __VA_ARGS__))
+     ACE_DEBUG((LM_WARNING, ACE_WARNING_PREFIX FMT  "\n" , __VA_ARGS__))
 
 #define LD_ERROR(FMT, ...) \
-    ACE_DEBUG((LM_ERROR,  ACE_ERROR_PREFIX FMT   __VA_ARGS__))
+    ACE_DEBUG((LM_ERROR,  ACE_ERROR_PREFIX FMT  "\n" ,  __VA_ARGS__))
 
 #define LD_CRITICAL(FMT, ...)\
-    ACE_DEBUG((LM_CRITICAL,  ACE_CRITICAL_PREFIX FMT  __VA_ARGS__))
+    ACE_DEBUG((LM_CRITICAL,  ACE_CRITICAL_PREFIX FMT  "\n" , __VA_ARGS__))
 
 #define LD_ALERT(FMT, ...)\
-    ACE_DEBUG((LM_ALERT, ACE_ALERT_PREFIX FMT   __VA_ARGS__))
+    ACE_DEBUG((LM_ALERT, ACE_ALERT_PREFIX FMT   "\n" , __VA_ARGS__))
 
 #define LD_EMERGENCY(FMT, ...)\
-    ACE_DEBUG((LM_EMERGENCY,ACE_EMERGENCY_PREFIX FMT __VA_ARGS__))
+    ACE_DEBUG((LM_EMERGENCY,ACE_EMERGENCY_PREFIX FMT "\n" , __VA_ARGS__))
 
-#define LD_TRACE(STR)\
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("\n"))); ACE_TRACE(STR)
+#define LD_TRACE(STR) ACE_TRACE(STR)
+//    ACE_DEBUG((LM_DEBUG, ACE_TEXT("\n"))); ACE_TRACE(STR)
 
 #define LD_T(STR) ACE_TEXT(STR)
 
