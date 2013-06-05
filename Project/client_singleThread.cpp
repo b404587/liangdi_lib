@@ -2,7 +2,8 @@
 
 int main(int argc , char* argv [])
 {
-    ACE_INET_Addr srvr(50000, ACE_LOCALHOST);
+   // ACE_INET_Addr srvr(50001, ACE_LOCALHOST);
+    ACE_INET_Addr srvr("127.0.0.1:50001");
 
     ACE_SOCK_Connector connector;
     ACE_SOCK_Stream peer;
