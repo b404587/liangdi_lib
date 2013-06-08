@@ -1,7 +1,7 @@
 #ifndef LD_TYPES_H_
 #define LD_TYPES_H_
 
-#include<ace/Basic_Types.h>
+#include"ld.h"
 
 typedef ACE_TCHAR       ld_tchar;
 typedef signed char     ld_char;

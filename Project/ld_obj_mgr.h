@@ -2,8 +2,6 @@
 #define LD_OBJ_MGR_H_
 
 #include"ld.h"
-#include<ace/Cleanup.h>
-#include"ace/Object_Manager.h"
 
 class Ld_Obj:public ACE_Cleanup
 {

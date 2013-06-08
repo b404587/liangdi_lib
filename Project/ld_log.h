@@ -80,8 +80,7 @@ ACE_NLOGGING
 注意，ACE_TRACE 取决于ACE_NTRACE 和ACE_NDEBUG两个配置
 */
 
-#include<fstream>
-#include <ace/Log_Msg.h>
+#include"ld.h"
 
 #define ACE_DEBUG_PREFIX            ACE_TEXT("%Ild_Debug %D ")
 #define ACE_INFO_PREFIX             ACE_TEXT("%Ild_Info %D ")
