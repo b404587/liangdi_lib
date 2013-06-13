@@ -1,12 +1,18 @@
 #include"ld.h"
 
+#ifdef _MSC_VER 
+#pragma comment(lib, "ACE.lib")
+#endif
+
 int main(int,char*[])
 {
+
     ACE_INET_Addr port_to_listen ("127.0.0.1:50001");
+	
     ACE_SOCK_Acceptor acceptor;
 
     if (acceptor.open (port_to_listen, 1) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\nacceptor.open")),100);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("acceptor.open error:%p\n"), ACE_TEXT("127.0.0.1:50001")),100);
 
     while (1)
     {
@@ -17,10 +23,8 @@ int main(int,char*[])
         if (acceptor.accept (peer, &peer_addr, &timeout, 0) == -1)
         {
             if (ACE_OS::last_error() == EINTR)
-                //LD_DEBUG("(%P|%t) Interrupted while waiting for connection\n" );
                 ACE_DEBUG((LM_DEBUG, LD_T("(%P|%t) Interrupted while waiting for connection\n") ));
              else if (ACE_OS::last_error() == ETIMEDOUT)
-                //LD_DEBUG ("(%P|%t) Timeout while waiting for connection\n");
                 ACE_DEBUG ((LM_DEBUG, LD_T("(%P|%t) Timeout while waiting for connection\n")));
         }
         else
@@ -42,10 +46,7 @@ int main(int,char*[])
           // Listing 7
         }
 
-        
     }
-
-
     return 0;
 }
 

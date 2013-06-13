@@ -16,6 +16,9 @@
 #include<ace/Cleanup.h>
 #include<ace/Object_Manager.h>
 #include<ace/Basic_Types.h>
+#include<ace/OS_NS_errno.h>
+#include <ace/Time_Value.h>
+
 
 #include<fstream>
 #include<iostream>

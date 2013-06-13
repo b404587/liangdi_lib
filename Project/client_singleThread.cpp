@@ -1,15 +1,18 @@
 #include"ld.h"
 
+#ifdef _MSC_VER 
+#pragma comment(lib, "ACE.lib")
+#endif
+
 int main(int argc , char* argv [])
 {
-   // ACE_INET_Addr srvr(50001, ACE_LOCALHOST);
     ACE_INET_Addr srvr("127.0.0.1:50001");
 
     ACE_SOCK_Connector connector;
     ACE_SOCK_Stream peer;
 
     if(-1 == connector.connect(peer, srvr))
-        ACE_ERROR_RETURN((LM_ERROR, LD_T("%p\nconnect")), 1);
+        ACE_ERROR_RETURN((LM_ERROR, LD_T("connect error: %p\n"), ACE_TEXT("127.0.0.1:50001")), 1);
 
     int bc;
     char buf[64];
