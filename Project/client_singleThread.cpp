@@ -1,8 +1,13 @@
 #include"ld.h"
 
 #ifdef _MSC_VER 
+#ifdef NDEBUG
 #pragma comment(lib, "ACE.lib")
+#else
+#pragma comment(lib, "ACEd.lib")
 #endif
+#endif
+
 
 int main(int argc , char* argv [])
 {
