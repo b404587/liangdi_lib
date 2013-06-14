@@ -27,6 +27,10 @@
 #include <ace/Svc_Handler.h>
 #include <ace/Connector.h>
 #include <ace/Reactor_Notification_Strategy.h>
+#include<ace/Asynch_IO.h>
+#include<ace/Asynch_Acceptor.h>
+#include<ace/Proactor.h>
+#include<ace/Asynch_Connector.h>
 
 #include<fstream>
 #include<iostream>
