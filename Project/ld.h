@@ -25,6 +25,8 @@
 #include <ace/Null_Condition.h>
 #include <ace/Null_Mutex.h>
 #include <ace/Svc_Handler.h>
+#include <ace/Connector.h>
+#include <ace/Reactor_Notification_Strategy.h>
 
 #include<fstream>
 #include<iostream>
