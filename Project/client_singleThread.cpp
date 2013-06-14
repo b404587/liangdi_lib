@@ -20,7 +20,7 @@ int main(int argc , char* argv [])
         ACE_ERROR_RETURN((LM_ERROR, LD_T("connect error: %p\n"), ACE_TEXT("127.0.0.1:50001")), 1);
 
     int bc;
-    char buf[64];
+    char buf[64] = {0};
     peer.send_n("uptime\n", 7);
     bc = peer.recv(buf, sizeof(buf));
 

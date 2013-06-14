@@ -19,6 +19,13 @@ public:
 		return acceptor_.get_handle();
 	}
 
+	virtual int handle_timeout (const ACE_Time_Value &current_time, const void *act = 0)
+	{
+		int * iArg = (int*)act;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("%D arg:%d\n"), *iArg));
+		return 0;
+	}
+
 	virtual int handle_input(ACE_HANDLE fd=ACE_INVALID_HANDLE);
 
 	virtual int handle_close(ACE_HANDLE handle, ACE_Reactor_Mask close_mask);
@@ -174,15 +181,130 @@ int LdService::handle_close(ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 	return 0;
 }
 
+class ClientService :
+  public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+	typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
+
+public:
+	int open (void * p = 0)
+	{
+		if (super::open (p) == -1)
+		  return -1;
+		
+		ACE_TCHAR peer_name[MAXHOSTNAMELEN];
+		ACE_INET_Addr peer_addr;
+		if (this->peer ().get_remote_addr (peer_addr) == 0 &&
+			peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN) == 0)
+		  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Connection from %s\n"),
+					  peer_name));
+		return 0;
+
+	}
+
+	// Called when input is available from the client.
+	virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE)
+	{
+		const size_t INPUT_SIZE = 4096;
+		char buffer[INPUT_SIZE];
+		ssize_t recv_cnt, send_cnt;
+		
+		recv_cnt = this->peer ().recv (buffer, sizeof(buffer));
+		if (recv_cnt <= 0)
+		  {
+			ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Connection closed\n")));
+			return -1;
+		  }
+		
+		send_cnt = this->peer ().send (buffer, static_cast<size_t> (recv_cnt));
+		if (send_cnt == recv_cnt)
+		  return 0;
+		if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
+		  ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("(%P|%t) %p\n"),
+							 ACE_TEXT ("send")),
+							0);
+		if (send_cnt == -1)
+		  send_cnt = 0;
+		ACE_Message_Block *mb = 0;
+		size_t remaining =
+		  static_cast<size_t> ((recv_cnt - send_cnt));
+		ACE_NEW_RETURN (mb, ACE_Message_Block (remaining), -1);
+		mb->copy (&buffer[send_cnt], remaining);
+		int output_off = this->msg_queue ()->is_empty ();
+		ACE_Time_Value nowait (ACE_OS::gettimeofday ());
+		if (this->putq (mb, &nowait) == -1)
+		  {
+			ACE_ERROR ((LM_ERROR,
+						ACE_TEXT ("(%P|%t) %p; discarding data\n"),
+						ACE_TEXT ("enqueue failed")));
+			mb->release ();
+			return 0;
+		  }
+		if (output_off)
+		  return this->reactor ()->register_handler
+			(this, ACE_Event_Handler::WRITE_MASK);
+		return 0;
+
+	}
+
+	// Called when output is possible.
+	virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE)
+	{
+		ACE_Message_Block *mb = 0;
+		ACE_Time_Value nowait (ACE_OS::gettimeofday ());
+		while (-1 != this->getq (mb, &nowait))
+		  {
+			ssize_t send_cnt =
+			  this->peer ().send (mb->rd_ptr (), mb->length ());
+			if (send_cnt == -1)
+			  ACE_ERROR ((LM_ERROR,
+						  ACE_TEXT ("(%P|%t) %p\n"),
+						  ACE_TEXT ("send")));
+			else
+			  mb->rd_ptr (static_cast<size_t> (send_cnt));
+			if (mb->length () > 0)
+			  {
+				this->ungetq (mb);
+				break;
+			  }
+			mb->release ();
+		  }
+		return (this->msg_queue ()->is_empty ()) ? -1 : 0;
+
+	}
+
+	// Called when this handler is removed from the ACE_Reactor.
+	virtual int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
+	{
+		if (close_mask == ACE_Event_Handler::WRITE_MASK)
+			return 0;
+		return super::handle_close (handle, close_mask);
+	}
+};
+
+
+typedef ACE_Acceptor<ClientService, ACE_SOCK_ACCEPTOR> ClientAcceptor;
+
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
+	ACE_INET_Addr port_to_listen ("127.0.0.1:50001");
+	ClientAcceptor acceptor;
+	 if (acceptor.open (port_to_listen, ACE_Reactor::instance (), ACE_NONBLOCK) == -1)
+	 	return 1;
+
+#if 0
 	ACE_INET_Addr addrListen("127.0.0.1:50001");
 	LdEvtHandler ldHandler;
 	ldHandler.reactor(ACE_Reactor::instance());
 	if(ldHandler.open(addrListen) == -1)
 		return 1;
 
+	ACE_Time_Value initDelay(3);
+	ACE_Time_Value interval(5);
+	int *iArg = new int(5);
+	ACE_Reactor::instance()->schedule_timer(&ldHandler, iArg, initDelay, interval);
+#endif
 	ACE_Reactor::instance()->run_reactor_event_loop();
 	return 0;
 }

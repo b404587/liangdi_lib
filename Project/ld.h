@@ -19,6 +19,12 @@
 #include<ace/OS_NS_errno.h>
 #include <ace/Time_Value.h>
 #include<ace/Reactor.h>
+#include<ace/OS_NS_sys_time.h>
+#include<ace/Acceptor.h>
+#include <ace/Synch_Traits.h>
+#include <ace/Null_Condition.h>
+#include <ace/Null_Mutex.h>
+#include <ace/Svc_Handler.h>
 
 #include<fstream>
 #include<iostream>
