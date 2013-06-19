@@ -31,6 +31,10 @@
 #include<ace/Asynch_Acceptor.h>
 #include<ace/Proactor.h>
 #include<ace/Asynch_Connector.h>
+#include<ace/Task.h>
+#include<ace/Thread_Mutex.h>
+#include<ace/Guard_T.h>
+#include<ace/Condition_T.h>
 
 #include<fstream>
 #include<iostream>
