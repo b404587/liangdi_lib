@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSmtp", "CSmtp.vcxproj", "{3A26829D-35E5-70C2-E71F-53A102CE1FE0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ACE_Smtp", "..\ACE_Smtp\ACE_Smtp.vcxproj", "{1BA035A1-CD74-4EB3-816F-8691928E2887}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A26829D-35E5-70C2-E71F-53A102CE1FE0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3A26829D-35E5-70C2-E71F-53A102CE1FE0}.Debug|Win32.Build.0 = Debug|Win32
+		{3A26829D-35E5-70C2-E71F-53A102CE1FE0}.Release|Win32.ActiveCfg = Release|Win32
+		{3A26829D-35E5-70C2-E71F-53A102CE1FE0}.Release|Win32.Build.0 = Release|Win32
+		{1BA035A1-CD74-4EB3-816F-8691928E2887}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1BA035A1-CD74-4EB3-816F-8691928E2887}.Debug|Win32.Build.0 = Debug|Win32
+		{1BA035A1-CD74-4EB3-816F-8691928E2887}.Release|Win32.ActiveCfg = Release|Win32
+		{1BA035A1-CD74-4EB3-816F-8691928E2887}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
